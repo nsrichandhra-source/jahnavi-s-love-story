@@ -32,15 +32,17 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const moveNoButton = () => {
-    if (allMessagesShown) return;
-    
     if (containerRef.current) {
       const container = containerRef.current.getBoundingClientRect();
-      const maxX = container.width - 150;
-      const maxY = container.height - 60;
       
-      const newX = Math.random() * maxX - maxX / 2;
-      const newY = Math.random() * maxY - maxY / 2;
+      // Constrain button movement to keep it visible on screen
+      // Button width ~150px, height ~60px
+      const maxXDisplacement = (container.width - 200) / 2;
+      const maxYDisplacement = (container.height - 150) / 2;
+      
+      // Generate random position within bounds
+      const newX = (Math.random() - 0.5) * maxXDisplacement;
+      const newY = (Math.random() - 0.5) * maxYDisplacement;
       
       setNoButtonPos({ x: newX, y: newY });
       
@@ -52,10 +54,11 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
       if (dialogueIndex < funnyDialogues.length - 1) {
         setDialogueIndex(prev => prev + 1);
       } else {
+        // All messages shown - button will disappear on next render
         setAllMessagesShown(true);
       }
       
-      setTimeout(() => setShowDialogue(false), 2500);
+      setTimeout(() => setShowDialogue(false), 5000);
     }
   };
 
@@ -175,17 +178,22 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
             />
           </motion.button>
 
-          {/* NO Button (Runaway) */}
-          <motion.button
-            onMouseEnter={moveNoButton}
-            onTouchStart={moveNoButton}
-            onClick={moveNoButton}
-            animate={{ x: noButtonPos.x, y: noButtonPos.y }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="px-14 py-5 bg-transparent border-2 border-sage text-sage font-body font-bold text-2xl rounded-full hover:border-sage-glow transition-colors"
-          >
-            No
-          </motion.button>
+          {/* NO Button (Runaway) - Only show before all messages */}
+          <AnimatePresence>
+            {!allMessagesShown && (
+              <motion.button
+                onMouseEnter={moveNoButton}
+                onTouchStart={moveNoButton}
+                onClick={moveNoButton}
+                animate={{ x: noButtonPos.x, y: noButtonPos.y }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                exit={{ opacity: 0, scale: 0 }}
+                className="px-14 py-5 bg-transparent border-2 border-sage text-sage font-body font-bold text-2xl rounded-full hover:border-sage-glow transition-colors"
+              >
+                No
+              </motion.button>
+            )}
+          </AnimatePresence>
         </motion.div>
 
         {/* Funny Dialogue Tooltip */}

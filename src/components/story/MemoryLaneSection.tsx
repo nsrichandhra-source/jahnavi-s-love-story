@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Camera } from "lucide-react";
+import { Camera, X } from "lucide-react";
+import { useState } from "react";
 import SectionNavigation from "../SectionNavigation";
 
 interface MemoryLaneSectionProps {
@@ -8,17 +9,51 @@ interface MemoryLaneSectionProps {
 }
 
 const memories = [
-  { caption: "The day we first talked 💬", rotate: -3 },
-  { caption: "When I realized I like you 👀", rotate: 2 },
-  { caption: "Our favorite chat ❤️", rotate: -2 },
-  { caption: "This selfie = my weakness 📸", rotate: 3 },
-  { caption: "One moment, infinite feelings ⏳", rotate: -1 },
-  { caption: "My favorite us 💞", rotate: 2 },
+  { caption: "The day we first talked", image: "/first msg.jpeg", rotate: -3 },
+  { caption: "When i realised i like you", image: "/WhatsApp Image 2026-02-06 at 11.38.13 AM.jpeg", rotate: 2 },
+  { caption: "Dumb - our fav chat", image: "/dumb.jpeg", rotate: -2 },
+  { caption: "This selfie = my weakness", image: "/selfie.jpeg", rotate: 3 },
+  { caption: "One moment, infinite feelings", image: "/milkshake.jpeg", rotate: -1 },
+  { caption: "My favorite us", image: "/freshers.jpeg", rotate: 2 },
 ];
 
 const MemoryLaneSection = ({ onPrevious, onNext }: MemoryLaneSectionProps) => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   return (
-    <motion.section
+    <>
+      {/* Image Popup Modal */}
+      {selectedImage && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setSelectedImage(null)}
+          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-4xl w-full max-h-[90vh]"
+          >
+            <img
+              src={selectedImage}
+              alt="Memory view"
+              className="w-full h-full object-contain rounded-lg"
+            />
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full p-2 transition-colors"
+            >
+              <X className="w-6 h-6 text-white" />
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
+
+      <motion.section
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -57,17 +92,16 @@ const MemoryLaneSection = ({ onPrevious, onNext }: MemoryLaneSectionProps) => {
               whileHover={{ scale: 1.05, rotate: 0, zIndex: 10 }}
               className="relative group"
             >
-              <div className="bg-card p-3 rounded-lg shadow-lg border-2 border-sage/20">
-                {/* Polaroid style photo placeholder */}
+              <div className="bg-card p-3 rounded-lg shadow-lg border-2 border-sage/20 cursor-pointer" onClick={() => setSelectedImage(memory.image)}>
+                {/* Memory photo */}
                 <div className="aspect-square bg-gradient-to-br from-rose-light/30 to-sage-light/30 rounded-md mb-3 flex items-center justify-center overflow-hidden">
-                  <motion.div
-                    animate={{ opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <Camera className="w-14 h-14 text-muted-foreground/40" />
-                  </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
-                    <span className="text-lg font-body text-foreground">Add your photo here 📷</span>
+                  <img
+                    src={memory.image}
+                    alt={memory.caption}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-card/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
+                    <span className="text-sm font-body text-foreground">Click to view full size</span>
                   </div>
                 </div>
                 
@@ -88,7 +122,7 @@ const MemoryLaneSection = ({ onPrevious, onNext }: MemoryLaneSectionProps) => {
           transition={{ delay: 1 }}
           className="mt-12 text-xl text-muted-foreground font-body italic"
         >
-          ✨ Add your favorite photos here to make it complete ✨
+          ✨ Favorite Memories ✨
         </motion.p>
 
         <SectionNavigation
@@ -99,6 +133,7 @@ const MemoryLaneSection = ({ onPrevious, onNext }: MemoryLaneSectionProps) => {
         />
       </div>
     </motion.section>
+    </>
   );
 };
 
