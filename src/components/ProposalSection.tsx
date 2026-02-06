@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Sparkles } from "lucide-react";
 import FloatingHearts from "./FloatingHearts";
@@ -19,17 +19,21 @@ const funnyDialogues = [
   "Be honest… you want to press Yes 😏",
   "Don't break my heart like that 💔👉👈",
   "I'll keep running but I'll never leave you 🏃‍♂️❤️",
+  "Okay fine, I give up... just kidding! Still no 'No' allowed! 💚",
 ];
 
 const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
   const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
-  const [currentDialogue, setCurrentDialogue] = useState("");
   const [dialogueIndex, setDialogueIndex] = useState(0);
   const [showDialogue, setShowDialogue] = useState(false);
+  const [currentDialogue, setCurrentDialogue] = useState("");
   const [isExploding, setIsExploding] = useState(false);
+  const [allMessagesShown, setAllMessagesShown] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const moveNoButton = () => {
+    if (allMessagesShown) return;
+    
     if (containerRef.current) {
       const container = containerRef.current.getBoundingClientRect();
       const maxX = container.width - 150;
@@ -40,11 +44,18 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
       
       setNoButtonPos({ x: newX, y: newY });
       
+      // Show current dialogue
       setCurrentDialogue(funnyDialogues[dialogueIndex]);
-      setDialogueIndex((prev) => (prev + 1) % funnyDialogues.length);
       setShowDialogue(true);
       
-      setTimeout(() => setShowDialogue(false), 2000);
+      // Move to next dialogue
+      if (dialogueIndex < funnyDialogues.length - 1) {
+        setDialogueIndex(prev => prev + 1);
+      } else {
+        setAllMessagesShown(true);
+      }
+      
+      setTimeout(() => setShowDialogue(false), 2500);
     }
   };
 
@@ -110,14 +121,14 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
           transition={{ type: "spring", duration: 0.8 }}
           className="mb-8"
         >
-          <Heart className="w-24 h-24 mx-auto text-rose fill-rose animate-heart-beat" />
+          <Heart className="w-28 h-28 mx-auto text-rose fill-rose animate-heart-beat" />
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-5xl md:text-7xl font-romantic text-rose mb-6 text-shadow-glow"
+          className="text-6xl md:text-8xl font-romantic text-rose mb-6 text-shadow-glow"
         >
           Jahnavi…
         </motion.h1>
@@ -135,7 +146,7 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="text-lg text-muted-foreground font-body mb-12 italic"
+          className="text-xl md:text-2xl text-muted-foreground font-body mb-12 italic"
         >
           "I made this little world just to ask you this…"
         </motion.p>
@@ -152,12 +163,12 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
             onClick={handleYesClick}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className="px-12 py-4 bg-gradient-to-r from-rose to-rose-light text-white font-body font-bold text-xl rounded-full shadow-lg animate-pulse-glow relative overflow-hidden group"
+            className="px-14 py-5 bg-gradient-to-r from-rose to-rose-light text-white font-body font-bold text-2xl rounded-full shadow-lg animate-pulse-glow relative overflow-hidden group"
           >
             <span className="relative z-10 flex items-center gap-2">
-              <Heart className="w-5 h-5 fill-white" />
+              <Heart className="w-6 h-6 fill-white" />
               Yes!
-              <Sparkles className="w-5 h-5" />
+              <Sparkles className="w-6 h-6" />
             </span>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-rose-glow to-rose opacity-0 group-hover:opacity-100 transition-opacity"
@@ -168,9 +179,10 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
           <motion.button
             onMouseEnter={moveNoButton}
             onTouchStart={moveNoButton}
+            onClick={moveNoButton}
             animate={{ x: noButtonPos.x, y: noButtonPos.y }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="px-12 py-4 bg-transparent border-2 border-sage text-sage font-body font-bold text-xl rounded-full hover:border-sage-glow transition-colors"
+            className="px-14 py-5 bg-transparent border-2 border-sage text-sage font-body font-bold text-2xl rounded-full hover:border-sage-glow transition-colors"
           >
             No
           </motion.button>
@@ -183,10 +195,13 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
               initial={{ opacity: 0, y: 20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.8 }}
-              className="absolute left-1/2 -translate-x-1/2 mt-8 px-6 py-3 bg-card rounded-2xl shadow-lg border border-sage/30"
+              className="absolute left-1/2 -translate-x-1/2 mt-8 px-8 py-4 bg-card rounded-2xl shadow-lg border border-sage/30"
             >
-              <p className="text-foreground font-body font-medium">{currentDialogue}</p>
+              <p className="text-foreground font-body font-semibold text-lg">{currentDialogue}</p>
               <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-card border-l border-t border-sage/30 rotate-45" />
+              <p className="text-muted-foreground text-sm mt-1">
+                {dialogueIndex + 1} of {funnyDialogues.length}
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -199,9 +214,9 @@ const ProposalSection = ({ onAccept }: ProposalSectionProps) => {
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 text-muted-foreground"
       >
-        <Heart className="w-4 h-4 text-rose fill-rose animate-pulse" />
-        <span className="font-body text-sm">Made with love, only for you</span>
-        <Heart className="w-4 h-4 text-sage fill-sage animate-pulse" />
+        <Heart className="w-5 h-5 text-rose fill-rose animate-pulse" />
+        <span className="font-body text-lg">Made with love, only for you</span>
+        <Heart className="w-5 h-5 text-sage fill-sage animate-pulse" />
       </motion.div>
     </motion.section>
   );

@@ -2,7 +2,12 @@ import { motion } from "framer-motion";
 import ValentineDaySection from "../ValentineDaySection";
 import { Heart } from "lucide-react";
 
-const ProposeDay = () => {
+interface ProposeDayProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
+const ProposeDay = ({ onPrevious, onNext }: ProposeDayProps) => {
   return (
     <ValentineDaySection
       title="Propose Day"
@@ -10,11 +15,13 @@ const ProposeDay = () => {
       message={
         <>
           <p>Today isn't the first time I chose you…</p>
-          <p className="text-sage font-medium text-2xl my-4">I choose you every day —</p>
+          <p className="text-sage font-medium text-2xl my-4">I choose you every day</p>
           <p>In every smile, every thought, every heartbeat.</p>
         </>
       }
       bgGradient="from-sage-light/20 via-background to-rose-light/10"
+      onPrevious={onPrevious}
+      onNext={onNext}
     >
       <motion.div
         animate={{
@@ -24,7 +31,7 @@ const ProposeDay = () => {
         transition={{ duration: 3, repeat: Infinity }}
         className="relative inline-block"
       >
-        <span className="text-8xl">💍</span>
+        <span className="text-9xl">💍</span>
         <motion.div
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 1.5, repeat: Infinity }}
@@ -39,7 +46,7 @@ const ProposeDay = () => {
             animate={{ scale: [1, 1.3, 1] }}
             transition={{ duration: 1, delay: i * 0.1, repeat: Infinity }}
           >
-            <Heart className="w-6 h-6 text-rose fill-rose" />
+            <Heart className="w-8 h-8 text-rose fill-rose" />
           </motion.div>
         ))}
       </div>

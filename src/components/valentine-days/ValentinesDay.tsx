@@ -2,6 +2,11 @@ import { motion } from "framer-motion";
 import ValentineDaySection from "../ValentineDaySection";
 import { Heart, Sparkles } from "lucide-react";
 
+interface ValentinesDayProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
 const Confetti = () => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
     {Array.from({ length: 40 }).map((_, i) => (
@@ -37,7 +42,7 @@ const Confetti = () => (
   </div>
 );
 
-const ValentinesDay = () => {
+const ValentinesDay = ({ onPrevious, onNext }: ValentinesDayProps) => {
   return (
     <div className="relative">
       <Confetti />
@@ -54,9 +59,9 @@ const ValentinesDay = () => {
             >
               My heart chose you.
             </motion.p>
-            <p>Not once — but every single day.</p>
+            <p>Not once, but every single day.</p>
             <p className="mt-4 text-sage font-medium">
-              You're my peace, my chaos, my happiness —
+              You're my peace, my chaos, my happiness
             </p>
             <p className="text-2xl font-romantic text-rose mt-4">
               My forever story, Jahnavi. 💕
@@ -64,6 +69,8 @@ const ValentinesDay = () => {
           </>
         }
         bgGradient="from-rose-light/30 via-background to-sage-light/20"
+        onPrevious={onPrevious}
+        onNext={onNext}
       >
         <motion.div
           className="mt-6"
@@ -72,7 +79,7 @@ const ValentinesDay = () => {
           }}
           transition={{ duration: 1, repeat: Infinity }}
         >
-          <Heart className="w-24 h-24 mx-auto text-rose fill-rose glow-rose" />
+          <Heart className="w-28 h-28 mx-auto text-rose fill-rose glow-rose" />
         </motion.div>
         
         <div className="flex justify-center gap-2 mt-8">
@@ -90,7 +97,7 @@ const ValentinesDay = () => {
               }}
             >
               <Heart
-                className={`w-6 h-6 ${i % 2 === 0 ? "text-rose fill-rose" : "text-sage fill-sage"}`}
+                className={`w-8 h-8 ${i % 2 === 0 ? "text-rose fill-rose" : "text-sage fill-sage"}`}
               />
             </motion.div>
           ))}

@@ -1,6 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
+import SectionNavigation from "../SectionNavigation";
+
+interface QuoteSliderSectionProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
 
 const quotes = [
   "Every love story is beautiful, but ours is my favorite.",
@@ -12,7 +18,7 @@ const quotes = [
   "If I had a flower for every time you made me smile, I'd have an endless garden.",
 ];
 
-const QuoteSliderSection = () => {
+const QuoteSliderSection = ({ onPrevious, onNext }: QuoteSliderSectionProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -39,22 +45,22 @@ const QuoteSliderSection = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.3 }}
-      className="min-h-[60vh] flex flex-col items-center justify-center bg-gradient-to-b from-rose-light/10 via-background to-sage-light/10 py-20 px-6"
+      className="min-h-[70vh] flex flex-col items-center justify-center bg-gradient-to-b from-rose-light/10 via-background to-sage-light/10 py-20 px-6"
     >
       <div className="max-w-4xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-romantic text-gradient-romantic mb-8"
+          className="text-5xl md:text-6xl font-romantic text-gradient-romantic mb-8"
         >
           Love Quotes
         </motion.h2>
 
         <div className="relative py-12">
-          <Quote className="w-12 h-12 mx-auto text-sage/30 mb-6" />
+          <Quote className="w-14 h-14 mx-auto text-sage/30 mb-6" />
 
-          <div className="min-h-[100px] flex items-center justify-center">
+          <div className="min-h-[120px] flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.p
                 key={currentIndex}
@@ -62,7 +68,7 @@ const QuoteSliderSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="text-xl md:text-2xl font-body text-foreground/90 italic px-8"
+                className="text-2xl md:text-3xl font-body text-foreground/90 italic px-8"
               >
                 "{quotes[currentIndex]}"
               </motion.p>
@@ -74,9 +80,9 @@ const QuoteSliderSection = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={goToPrev}
-              className="p-2 rounded-full bg-sage/10 text-sage hover:bg-sage/20 transition-colors"
+              className="p-3 rounded-full bg-sage/10 text-sage hover:bg-sage/20 transition-colors"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-7 h-7" />
             </motion.button>
 
             <div className="flex gap-2">
@@ -87,9 +93,9 @@ const QuoteSliderSection = () => {
                     setIsAutoPlaying(false);
                     setCurrentIndex(i);
                   }}
-                  className={`w-2 h-2 rounded-full transition-all ${
+                  className={`w-3 h-3 rounded-full transition-all ${
                     i === currentIndex
-                      ? "bg-rose w-6"
+                      ? "bg-rose w-8"
                       : "bg-sage/30 hover:bg-sage/50"
                   }`}
                 />
@@ -100,12 +106,19 @@ const QuoteSliderSection = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={goToNext}
-              className="p-2 rounded-full bg-sage/10 text-sage hover:bg-sage/20 transition-colors"
+              className="p-3 rounded-full bg-sage/10 text-sage hover:bg-sage/20 transition-colors"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-7 h-7" />
             </motion.button>
           </div>
         </div>
+
+        <SectionNavigation
+          onPrevious={onPrevious}
+          onNext={onNext}
+          showPrevious={!!onPrevious}
+          showNext={!!onNext}
+        />
       </div>
     </motion.section>
   );

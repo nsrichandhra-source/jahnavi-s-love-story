@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { Heart, Sparkles, RotateCcw } from "lucide-react";
+import SectionNavigation from "../SectionNavigation";
 
 interface FinaleSectionProps {
   onReplay: () => void;
+  onPrevious?: () => void;
 }
 
 const Confetti = () => (
@@ -40,7 +42,7 @@ const Confetti = () => (
   </div>
 );
 
-const FinaleSection = ({ onReplay }: FinaleSectionProps) => {
+const FinaleSection = ({ onReplay, onPrevious }: FinaleSectionProps) => {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -58,7 +60,7 @@ const FinaleSection = ({ onReplay }: FinaleSectionProps) => {
           transition={{ type: "spring", duration: 1 }}
           className="mb-8"
         >
-          <Heart className="w-32 h-32 mx-auto text-rose fill-rose animate-heart-beat glow-rose" />
+          <Heart className="w-36 h-36 mx-auto text-rose fill-rose animate-heart-beat glow-rose" />
         </motion.div>
 
         <motion.h1
@@ -66,7 +68,7 @@ const FinaleSection = ({ onReplay }: FinaleSectionProps) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="text-6xl md:text-8xl font-romantic text-gradient-romantic mb-6 text-shadow-glow"
+          className="text-7xl md:text-9xl font-romantic text-gradient-romantic mb-6 text-shadow-glow"
         >
           I Love You, Jahnavi
         </motion.h1>
@@ -76,7 +78,7 @@ const FinaleSection = ({ onReplay }: FinaleSectionProps) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="text-2xl md:text-3xl font-romantic text-sage mb-4"
+          className="text-3xl md:text-4xl font-romantic text-sage mb-4"
         >
           ❤️
         </motion.p>
@@ -86,7 +88,7 @@ const FinaleSection = ({ onReplay }: FinaleSectionProps) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.7 }}
-          className="text-xl md:text-2xl font-body text-foreground/80 mb-12"
+          className="text-2xl md:text-3xl font-body text-foreground/80 mb-12"
         >
           "Forever isn't enough with you."
         </motion.p>
@@ -112,13 +114,19 @@ const FinaleSection = ({ onReplay }: FinaleSectionProps) => {
               }}
             >
               <Heart
-                className={`w-6 h-6 ${
+                className={`w-8 h-8 ${
                   i % 2 === 0 ? "text-rose fill-rose" : "text-sage fill-sage"
                 }`}
               />
             </motion.div>
           ))}
         </motion.div>
+
+        <SectionNavigation
+          onPrevious={onPrevious}
+          showPrevious={!!onPrevious}
+          showNext={false}
+        />
 
         <motion.button
           initial={{ opacity: 0, y: 30 }}
@@ -128,9 +136,9 @@ const FinaleSection = ({ onReplay }: FinaleSectionProps) => {
           onClick={onReplay}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="px-8 py-4 bg-gradient-to-r from-sage to-sage-light text-white font-body font-bold rounded-full shadow-lg glow-sage flex items-center gap-2 mx-auto"
+          className="mt-8 px-10 py-5 bg-gradient-to-r from-sage to-sage-light text-white font-body font-bold text-xl rounded-full shadow-lg glow-sage flex items-center gap-2 mx-auto"
         >
-          <RotateCcw className="w-5 h-5" />
+          <RotateCcw className="w-6 h-6" />
           Relive Our Story
         </motion.button>
       </div>
@@ -143,11 +151,11 @@ const FinaleSection = ({ onReplay }: FinaleSectionProps) => {
         transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-0 right-0 text-center"
       >
-        <p className="font-body text-muted-foreground flex items-center justify-center gap-2">
+        <p className="font-body text-xl text-muted-foreground flex items-center justify-center gap-2">
           Made with all my love
-          <Heart className="w-4 h-4 text-rose fill-rose" />
+          <Heart className="w-5 h-5 text-rose fill-rose" />
           only for Jahnavi
-          <Heart className="w-4 h-4 text-sage fill-sage" />
+          <Heart className="w-5 h-5 text-sage fill-sage" />
         </p>
       </motion.footer>
     </motion.section>

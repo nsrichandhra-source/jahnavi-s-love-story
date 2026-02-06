@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import ValentineDaySection from "../ValentineDaySection";
 
-const ChocolateDay = () => {
+interface ChocolateDayProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
+const ChocolateDay = ({ onPrevious, onNext }: ChocolateDayProps) => {
   return (
     <ValentineDaySection
       title="Chocolate Day"
@@ -19,16 +24,18 @@ const ChocolateDay = () => {
           >
             I ate your chocolate… 😔🍫
           </motion.p>
-          <p className="mt-4">Because it reminded me of you —</p>
+          <p className="mt-4">Because it reminded me of you</p>
           <p className="text-sage font-medium">Sweet, addictive, and impossible to stop loving.</p>
-          <p className="mt-6 italic text-muted-foreground">
+          <p className="mt-6 italic text-muted-foreground text-lg">
             I'll buy you a lifetime supply if you stay forever 💚
           </p>
         </>
       }
       bgGradient="from-amber-100/30 via-background to-rose-light/10"
+      onPrevious={onPrevious}
+      onNext={onNext}
     >
-      <div className="flex flex-wrap justify-center gap-4 text-5xl">
+      <div className="flex flex-wrap justify-center gap-4 text-6xl">
         {["🍫", "🍬", "🍭", "🧁", "🎂"].map((choco, i) => (
           <motion.span
             key={i}
@@ -44,7 +51,7 @@ const ChocolateDay = () => {
       </div>
       
       <motion.div
-        className="mt-8 text-6xl"
+        className="mt-8 text-7xl"
         animate={{ scale: [1, 1.2, 1] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
