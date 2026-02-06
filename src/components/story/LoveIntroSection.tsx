@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { Heart, Sparkles } from "lucide-react";
+import SectionNavigation from "../SectionNavigation";
 
-const LoveIntroSection = () => {
+interface LoveIntroSectionProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
+const LoveIntroSection = ({ onPrevious, onNext }: LoveIntroSectionProps) => {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -16,21 +22,21 @@ const LoveIntroSection = () => {
           viewport={{ once: true }}
           className="mb-8"
         >
-          <Heart className="w-16 h-16 mx-auto text-rose fill-rose animate-heart-beat" />
+          <Heart className="w-20 h-20 mx-auto text-rose fill-rose animate-heart-beat" />
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-6xl font-romantic text-gradient-romantic mb-8"
+          className="text-5xl md:text-7xl font-romantic text-gradient-romantic mb-8"
         >
           Our Love Story
         </motion.h2>
 
         <div className="section-divider mb-12" />
 
-        <div className="space-y-6 text-lg md:text-xl font-body text-foreground/90 leading-relaxed">
+        <div className="space-y-6 text-xl md:text-2xl font-body text-foreground/90 leading-relaxed">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -57,9 +63,9 @@ const LoveIntroSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
-            className="text-xl md:text-2xl text-sage font-medium"
+            className="text-2xl md:text-3xl text-sage font-medium"
           >
-            But then you walked in —
+            But then you walked in
             <br />
             And suddenly even silence felt special.
           </motion.p>
@@ -71,7 +77,7 @@ const LoveIntroSection = () => {
             transition={{ delay: 0.8 }}
             className="py-6"
           >
-            <Sparkles className="w-8 h-8 mx-auto text-gold animate-sparkle" />
+            <Sparkles className="w-10 h-10 mx-auto text-gold animate-sparkle" />
           </motion.div>
 
           <motion.p
@@ -92,9 +98,9 @@ const LoveIntroSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 1.2 }}
-            className="text-xl md:text-2xl text-rose font-medium pt-4"
+            className="text-2xl md:text-3xl text-rose font-medium pt-4"
           >
-            You didn't just enter my life —
+            You didn't just enter my life
             <br />
             You became the most beautiful part of it.
           </motion.p>
@@ -110,7 +116,7 @@ const LoveIntroSection = () => {
           {["💕", "✨", "💚", "✨", "💕"].map((emoji, i) => (
             <motion.span
               key={i}
-              className="text-3xl"
+              className="text-4xl"
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
             >
@@ -118,6 +124,13 @@ const LoveIntroSection = () => {
             </motion.span>
           ))}
         </motion.div>
+
+        <SectionNavigation
+          onPrevious={onPrevious}
+          onNext={onNext}
+          showPrevious={!!onPrevious}
+          showNext={!!onNext}
+        />
       </div>
     </motion.section>
   );

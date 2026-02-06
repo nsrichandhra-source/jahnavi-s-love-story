@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        romantic: ["Great Vibes", "cursive"],
-        body: ["Quicksand", "sans-serif"],
+        romantic: ["Dancing Script", "cursive"],
+        body: ["Nunito", "sans-serif"],
+        display: ["Playfair Display", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",

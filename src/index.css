@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -112,21 +112,21 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Nunito', sans-serif;
   }
 
   h1, h2, h3 {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Dancing Script', cursive;
   }
 }
 
 @layer components {
   .font-romantic {
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Dancing Script', cursive;
   }
 
   .font-body {
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Nunito', sans-serif;
   }
 
   .text-gradient-romantic {

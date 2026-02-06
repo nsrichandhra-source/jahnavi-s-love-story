@@ -1,6 +1,11 @@
 import { motion } from "framer-motion";
 import ValentineDaySection from "../ValentineDaySection";
 
+interface RoseDayProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
 const FallingRoses = () => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
     {Array.from({ length: 15 }).map((_, i) => (
@@ -27,7 +32,7 @@ const FallingRoses = () => (
   </div>
 );
 
-const RoseDay = () => {
+const RoseDay = ({ onPrevious, onNext }: RoseDayProps) => {
   return (
     <div className="relative">
       <FallingRoses />
@@ -38,13 +43,15 @@ const RoseDay = () => {
           <>
             <p>Every rose reminds me of you…</p>
             <p>Soft, beautiful, and full of life.</p>
-            <p>If I could, I'd fill your world with roses —</p>
+            <p>If I could, I'd fill your world with roses</p>
             <p className="text-rose font-medium">Just the way you fill my life with happiness.</p>
           </>
         }
         bgGradient="from-rose-light/20 via-background to-sage-light/10"
+        onPrevious={onPrevious}
+        onNext={onNext}
       >
-        <div className="flex justify-center gap-4 text-5xl">
+        <div className="flex justify-center gap-4 text-6xl">
           {["🌹", "🥀", "🌷", "🌺", "🌸"].map((rose, i) => (
             <motion.span
               key={i}

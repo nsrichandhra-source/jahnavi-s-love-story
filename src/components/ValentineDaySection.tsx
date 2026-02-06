@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import SectionNavigation from "./SectionNavigation";
 
 interface ValentineDaySectionProps {
   title: string;
@@ -8,6 +9,8 @@ interface ValentineDaySectionProps {
   bgGradient?: string;
   accentColor?: string;
   children?: ReactNode;
+  onPrevious?: () => void;
+  onNext?: () => void;
 }
 
 const ValentineDaySection = ({
@@ -16,6 +19,8 @@ const ValentineDaySection = ({
   message,
   bgGradient = "from-blush via-background to-sage-light/20",
   children,
+  onPrevious,
+  onNext,
 }: ValentineDaySectionProps) => {
   return (
     <motion.section
@@ -31,7 +36,7 @@ const ValentineDaySection = ({
           whileInView={{ scale: 1, rotate: 0 }}
           viewport={{ once: true }}
           transition={{ type: "spring", duration: 0.8 }}
-          className="text-7xl md:text-8xl mb-8"
+          className="text-8xl md:text-9xl mb-8"
         >
           {emoji}
         </motion.div>
@@ -41,7 +46,7 @@ const ValentineDaySection = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-4xl md:text-6xl font-romantic text-gradient-romantic mb-8 text-shadow-soft"
+          className="text-5xl md:text-7xl font-romantic text-gradient-romantic mb-8 text-shadow-soft"
         >
           {title}
         </motion.h2>
@@ -53,7 +58,7 @@ const ValentineDaySection = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="text-lg md:text-xl font-body text-foreground/90 leading-relaxed space-y-4"
+          className="text-xl md:text-2xl font-body text-foreground/90 leading-relaxed space-y-4"
         >
           {message}
         </motion.div>
@@ -69,6 +74,13 @@ const ValentineDaySection = ({
             {children}
           </motion.div>
         )}
+
+        <SectionNavigation
+          onPrevious={onPrevious}
+          onNext={onNext}
+          showPrevious={!!onPrevious}
+          showNext={!!onNext}
+        />
       </div>
     </motion.section>
   );

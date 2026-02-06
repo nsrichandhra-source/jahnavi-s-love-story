@@ -1,5 +1,11 @@
 import { motion } from "framer-motion";
 import { Camera } from "lucide-react";
+import SectionNavigation from "../SectionNavigation";
+
+interface MemoryLaneSectionProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
 
 const memories = [
   { caption: "The day we first talked 💬", rotate: -3 },
@@ -10,7 +16,7 @@ const memories = [
   { caption: "My favorite us 💞", rotate: 2 },
 ];
 
-const MemoryLaneSection = () => {
+const MemoryLaneSection = ({ onPrevious, onNext }: MemoryLaneSectionProps) => {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -23,7 +29,7 @@ const MemoryLaneSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-6xl font-romantic text-gradient-romantic mb-6"
+          className="text-5xl md:text-7xl font-romantic text-gradient-romantic mb-6"
         >
           Memory Lane
         </motion.h2>
@@ -35,7 +41,7 @@ const MemoryLaneSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-muted-foreground font-body mb-12"
+          className="text-xl md:text-2xl text-muted-foreground font-body mb-12"
         >
           📸 Moments I'll treasure forever
         </motion.p>
@@ -58,15 +64,15 @@ const MemoryLaneSection = () => {
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <Camera className="w-12 h-12 text-muted-foreground/40" />
+                    <Camera className="w-14 h-14 text-muted-foreground/40" />
                   </motion.div>
                   <div className="absolute inset-0 bg-gradient-to-t from-card/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
-                    <span className="text-sm font-body text-foreground">Add your photo here 📷</span>
+                    <span className="text-lg font-body text-foreground">Add your photo here 📷</span>
                   </div>
                 </div>
                 
                 {/* Caption */}
-                <p className="font-body text-sm text-foreground/80 text-center">{memory.caption}</p>
+                <p className="font-body text-lg text-foreground/80 text-center">{memory.caption}</p>
               </div>
 
               {/* Tape decorations */}
@@ -80,10 +86,17 @@ const MemoryLaneSection = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 1 }}
-          className="mt-12 text-muted-foreground font-body italic"
+          className="mt-12 text-xl text-muted-foreground font-body italic"
         >
           ✨ Add your favorite photos here to make it complete ✨
         </motion.p>
+
+        <SectionNavigation
+          onPrevious={onPrevious}
+          onNext={onNext}
+          showPrevious={!!onPrevious}
+          showNext={!!onNext}
+        />
       </div>
     </motion.section>
   );

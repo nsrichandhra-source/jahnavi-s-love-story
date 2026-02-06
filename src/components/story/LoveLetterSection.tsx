@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
 import { Heart, Feather } from "lucide-react";
+import SectionNavigation from "../SectionNavigation";
 
-const LoveLetterSection = () => {
+interface LoveLetterSectionProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
+const LoveLetterSection = ({ onPrevious, onNext }: LoveLetterSectionProps) => {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -16,14 +22,14 @@ const LoveLetterSection = () => {
           viewport={{ once: true }}
           className="mb-6"
         >
-          <Feather className="w-12 h-12 mx-auto text-rose" />
+          <Feather className="w-14 h-14 mx-auto text-rose" />
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-6xl font-romantic text-gradient-romantic mb-6"
+          className="text-5xl md:text-7xl font-romantic text-gradient-romantic mb-6"
         >
           A Love Letter
         </motion.h2>
@@ -33,7 +39,7 @@ const LoveLetterSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-muted-foreground font-body mb-8 italic"
+          className="text-xl md:text-2xl text-muted-foreground font-body mb-8 italic"
         >
           "This isn't just a letter…
           <br />
@@ -51,10 +57,10 @@ const LoveLetterSection = () => {
           <div className="bg-cream/80 backdrop-blur-sm rounded-lg p-8 md:p-12 shadow-lg border border-rose-light/30 relative overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-4 right-4 text-rose/20">
-              <Heart className="w-20 h-20 fill-current" />
+              <Heart className="w-24 h-24 fill-current" />
             </div>
             <div className="absolute bottom-4 left-4 text-sage/20">
-              <Heart className="w-16 h-16 fill-current" />
+              <Heart className="w-20 h-20 fill-current" />
             </div>
 
             {/* Paper lines effect */}
@@ -69,11 +75,11 @@ const LoveLetterSection = () => {
             </div>
 
             {/* Letter content */}
-            <div className="relative z-10 text-left font-body text-foreground/90 space-y-4 leading-relaxed">
-              <p className="text-xl font-romantic text-rose">Dear Jahnavi,</p>
+            <div className="relative z-10 text-left font-body text-foreground/90 space-y-4 leading-relaxed text-lg md:text-xl">
+              <p className="text-2xl font-romantic text-rose">Dear Jahnavi,</p>
               
               <p>
-                I don't know when it happened exactly — that moment when you went from being someone I knew to someone I couldn't imagine my life without.
+                I don't know when it happened exactly, that moment when you went from being someone I knew to someone I couldn't imagine my life without.
               </p>
               
               <p>
@@ -93,9 +99,9 @@ const LoveLetterSection = () => {
               </p>
               
               <p className="text-right mt-8">
-                <span className="text-2xl font-romantic text-rose">Forever yours,</span>
+                <span className="text-3xl font-romantic text-rose">Forever yours,</span>
                 <br />
-                <span className="text-xl font-romantic text-foreground">Your Valentine 💚</span>
+                <span className="text-2xl font-romantic text-foreground">Your Valentine 💚</span>
               </p>
             </div>
           </div>
@@ -104,7 +110,7 @@ const LoveLetterSection = () => {
           {["🌸", "🌹", "💕"].map((petal, i) => (
             <motion.span
               key={i}
-              className="absolute text-2xl"
+              className="absolute text-3xl"
               style={{
                 top: `${20 + i * 30}%`,
                 right: `${-10 + i * 5}%`,
@@ -124,6 +130,13 @@ const LoveLetterSection = () => {
             </motion.span>
           ))}
         </motion.div>
+
+        <SectionNavigation
+          onPrevious={onPrevious}
+          onNext={onNext}
+          showPrevious={!!onPrevious}
+          showNext={!!onNext}
+        />
       </div>
     </motion.section>
   );

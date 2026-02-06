@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import ValentineDaySection from "../ValentineDaySection";
 
-const KissDay = () => {
+interface KissDayProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
+const KissDay = ({ onPrevious, onNext }: KissDayProps) => {
   return (
     <ValentineDaySection
       title="Kiss Day"
@@ -13,6 +18,8 @@ const KissDay = () => {
         </>
       }
       bgGradient="from-rose-light/30 via-background to-rose-light/10"
+      onPrevious={onPrevious}
+      onNext={onNext}
     >
       <motion.div
         className="relative mt-8"
@@ -21,13 +28,13 @@ const KissDay = () => {
         }}
         transition={{ duration: 1.5, repeat: Infinity }}
       >
-        <span className="text-8xl">💋</span>
+        <span className="text-9xl">💋</span>
         
         {/* Sparkle trail */}
         {Array.from({ length: 8 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-gold rounded-full"
+            className="absolute w-3 h-3 bg-gold rounded-full"
             style={{
               left: `${50 + Math.cos((i / 8) * Math.PI * 2) * 60}%`,
               top: `${50 + Math.sin((i / 8) * Math.PI * 2) * 60}%`,
@@ -45,7 +52,7 @@ const KissDay = () => {
         ))}
       </motion.div>
       
-      <div className="flex justify-center gap-4 mt-8 text-4xl">
+      <div className="flex justify-center gap-4 mt-8 text-5xl">
         {["💋", "💕", "✨", "💋", "💕"].map((emoji, i) => (
           <motion.span
             key={i}

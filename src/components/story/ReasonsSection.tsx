@@ -1,18 +1,24 @@
 import { motion } from "framer-motion";
 import { Heart, Star, Smile, Moon, Coffee, Music, MessageCircle, Sparkles } from "lucide-react";
+import SectionNavigation from "../SectionNavigation";
+
+interface ReasonsSectionProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
 
 const reasons = [
   { icon: Smile, text: "Your smile that lights up my world", color: "text-rose" },
   { icon: Heart, text: "The way you care without even trying", color: "text-sage" },
   { icon: Star, text: "How you make ordinary moments magical", color: "text-gold" },
-  { icon: Moon, text: "Your late-night voice that calms my soul", color: "text-rose" },
+  { icon: Moon, text: "Your late night voice that calms my soul", color: "text-rose" },
   { icon: Coffee, text: "How you remember the little things", color: "text-sage" },
   { icon: Music, text: "The way you laugh at my silly jokes", color: "text-gold" },
   { icon: MessageCircle, text: "Your messages that make my day better", color: "text-rose" },
   { icon: Sparkles, text: "Simply because you're you", color: "text-sage" },
 ];
 
-const ReasonsSection = () => {
+const ReasonsSection = ({ onPrevious, onNext }: ReasonsSectionProps) => {
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -25,7 +31,7 @@ const ReasonsSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-6xl font-romantic text-gradient-romantic mb-6"
+          className="text-5xl md:text-7xl font-romantic text-gradient-romantic mb-6"
         >
           Reasons I Love You
         </motion.h2>
@@ -37,7 +43,7 @@ const ReasonsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-lg text-muted-foreground font-body mb-12 italic"
+          className="text-xl md:text-2xl text-muted-foreground font-body mb-12 italic"
         >
           "Loving you isn't one reason…
           <br />
@@ -61,9 +67,9 @@ const ReasonsSection = () => {
                   animate={{ rotate: [0, 10, -10, 0] }}
                   transition={{ duration: 4, delay: i * 0.3, repeat: Infinity }}
                 >
-                  <Icon className={`w-10 h-10 mx-auto mb-4 ${reason.color} group-hover:scale-110 transition-transform`} />
+                  <Icon className={`w-12 h-12 mx-auto mb-4 ${reason.color} group-hover:scale-110 transition-transform`} />
                 </motion.div>
-                <p className="font-body text-foreground/80 text-sm">{reason.text}</p>
+                <p className="font-body text-foreground/80 text-lg">{reason.text}</p>
               </motion.div>
             );
           })}
@@ -74,10 +80,17 @@ const ReasonsSection = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 1 }}
-          className="mt-12 text-2xl font-romantic text-rose"
+          className="mt-12 text-3xl font-romantic text-rose"
         >
           And a million more reasons I'm still discovering... 💕
         </motion.p>
+
+        <SectionNavigation
+          onPrevious={onPrevious}
+          onNext={onNext}
+          showPrevious={!!onPrevious}
+          showNext={!!onNext}
+        />
       </div>
     </motion.section>
   );

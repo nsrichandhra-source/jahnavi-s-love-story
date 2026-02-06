@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import ValentineDaySection from "../ValentineDaySection";
 
-const TeddyDay = () => {
+interface TeddyDayProps {
+  onPrevious?: () => void;
+  onNext?: () => void;
+}
+
+const TeddyDay = ({ onPrevious, onNext }: TeddyDayProps) => {
   return (
     <ValentineDaySection
       title="Teddy Day"
@@ -11,16 +16,18 @@ const TeddyDay = () => {
           <p>I wish you had a teddy right now…</p>
           <p>So when you hug it, it could hug you back like I would.</p>
           <p className="mt-4 text-sage font-medium text-xl">Until then…</p>
-          <p className="text-rose">Every teddy here is me — holding you close 💞</p>
+          <p className="text-rose">Every teddy here is me, holding you close 💞</p>
         </>
       }
       bgGradient="from-amber-50/50 via-background to-sage-light/10"
+      onPrevious={onPrevious}
+      onNext={onNext}
     >
       <div className="flex flex-wrap justify-center gap-6 mt-4">
         {["🧸", "🐻", "🧸", "🐻‍❄️", "🧸"].map((teddy, i) => (
           <motion.div
             key={i}
-            className="text-6xl"
+            className="text-7xl"
             animate={{
               y: [0, -20, 0],
               rotate: [0, 15, -15, 0],
@@ -42,7 +49,7 @@ const TeddyDay = () => {
         animate={{ scale: [1, 1.02, 1] }}
         transition={{ duration: 3, repeat: Infinity }}
       >
-        <p className="text-lg font-body text-muted-foreground italic">
+        <p className="text-xl font-body text-muted-foreground italic">
           *Sending you the biggest virtual teddy hug* 🤗
         </p>
       </motion.div>
